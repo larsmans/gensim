@@ -51,7 +51,7 @@ import logging
 
 from gensim import utils
 from gensim.models.ldamodel import LdaModel, LdaState
-from six.moves.queue import Full
+from six.moves import queue
 from six.moves import xrange
 from multiprocessing import Pool, Queue, cpu_count
 
@@ -252,7 +252,7 @@ class LdaMulticore(LdaModel):
                         logger.info('PROGRESS: pass %i, dispatched chunk #%i = '
                             'documents up to #%i/%i, outstanding queue size %i',
                             pass_, chunk_no, chunk_no * self.chunksize + len(chunk), lencorpus, queue_size[0])
-                    except Full:
+                    except queue.Full:
                         # in case the input job queue is full, keep clearing the
                         # result queue, to make sure we don't deadlock
                         process_result_queue()
